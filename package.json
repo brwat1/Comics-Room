@@ -5,21 +5,26 @@
   "main": "server.js",
   "scripts": {
     "start": "node src/server.js",
+    "watch": "nodemon src/server.js",
+    "installation-client": "cd src/client && npm install",
     "client": "cd src/client && npm start",
     "build": "cd src/client && npm run build",
-    "installation-client": "cd src/client && npm install",
-    "watch": "nodemon src/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "db-up": "cd ../Collec && bin/start"
+    "test": "echo \"Error: no test specified\" && exit 1",
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/express": "^4.17.17",
+    "@types/mysql": "^2.15.21",
     "axios": "^1.4.0",
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "moment": "^2.29.4",
+    "mysql2": "^3.4.0",
     "ts-node": "^10.9.1"
   }
 }
