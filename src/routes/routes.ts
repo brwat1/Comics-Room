@@ -3,12 +3,13 @@ import { catchErrors } from '../helper/errorsHandler'
 import {
     getComics,
     getComicbook
-} from '../controllers/comicsController'
+} from '../controller/comicsController'
 
 import {
-    createUser
-    // updateRoom
-} from '../controllers/usersController'
+    createUser,
+    deleteUser,
+    updateUser
+} from '../controller/usersController'
 
 const router = express.Router()
 
@@ -17,11 +18,13 @@ router.get('/api/comics', catchErrors(getComics))
 router.get('/api/comic/:id', catchErrors(getComicbook))
 
 //post APIs
-router.post('/api/rooms', catchErrors(createUser))
+router.post('/api/signup', catchErrors(createUser))
 
 //delete APIs
-// router.delete('/api/rooms/:id', catchErrors(deleteRoom))
-// router.patch('/api/rooms/:id', catchErrors(updateRoom))
+router.delete('/api/account/delete', catchErrors(deleteUser))
+
+//patch APIs
+router.patch('/api/account/update', catchErrors(updateUser))
 
 
 export default router

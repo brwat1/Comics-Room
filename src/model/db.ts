@@ -1,37 +1,21 @@
-import mysql from 'mysql2';
+import { Sequelize } from 'sequelize';
 import dotenv from 'dotenv';
 
-dotenv.config()
+dotenv.config();
 
-const host = process.env.DB_HOST
-const database = process.env.DB_NAME
-const user = process.env.DB_USER
-const password = process.env.DB_PASSWORD
+class db {
+    static init() {
+        const host = process.env.DB_HOST as string;
+        const database = process.env.DB_NAME as string;
+        const user = process.env.DB_USER as string;
+        const password = process.env.DB_PASSWORD as string;
 
-const connection = mysql.createConnection({
-    host: host,
-    user: user,
-    password: password,
-    database: database,
-});
-
-// Établir la connexion à la base de données
-connection.connect((error) => {
-    if (error) {
-        console.error('Erreur de connexion à la base de données :', error);
-        return;
+        return new Sequelize(database, user, password, {
+            host: host,
+            dialect: 'mysql',
+            logging: false
+        });
     }
+}
 
-    console.log('Database link established.');
-
-    const createSchemaQuery = `CREATE SCHEMA IF NOT EXISTS ` + database;
-    connection.query(createSchemaQuery, (error, results) => {
-        if (error) {
-            console.error('Error occured while creating the schema :', error);
-        } else {
-            console.log('Schema created');
-        }
-
-        connection.end();
-    });
-});
+export default db;
