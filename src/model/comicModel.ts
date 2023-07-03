@@ -4,7 +4,7 @@ import { DataTypes, Model } from 'sequelize';
 const sequelize = db.init();
 
 class Comic extends Model {
-    public id!: number;
+    public isbn!: string;
     public author!: number;
     public volume!: number;
     public title!: string;
@@ -18,10 +18,9 @@ class Comic extends Model {
 
 Comic.init(
     {
-        id: {
-            type: DataTypes.INTEGER,
+        isbn: {
+            type: DataTypes.STRING(255),
             primaryKey: true,
-            autoIncrement: true,
         },
         author: {
             type: DataTypes.INTEGER,
@@ -58,7 +57,7 @@ Comic.init(
         page_count: {
             type: DataTypes.INTEGER,
             allowNull: false,
-        },
+        }
     },
     {
         sequelize,
