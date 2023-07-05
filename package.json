@@ -5,12 +5,14 @@
   "main": "server.js",
   "scripts": {
     "postinstall": "patch-package",
+    "apply": "cd node_modules/bedetheque-scraper && npm i && tsc --project ./tsconfig.json",
     "start": "ts-node src/server.ts",
     "watch": "nodemon src/server.ts",
     "installation-client": "cd src/client && npm install",
     "client": "cd src/client && npm start",
     "build": "cd src/client && npm run build",
     "db-up": "cd ../Collec && bin/start",
+    "patch": "npx patch-package",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
