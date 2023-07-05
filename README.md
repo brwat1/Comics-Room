@@ -3,12 +3,14 @@
 
 Scrap datas from an online collection manager, insert into database, allow users to create account, create collections, display it.
 
-Required DB tables
-
 
 ## Installation
 
-It only needs a npm install and the database running (don't forget to configure in .env file)
+It needs theses cmds and the database running (don't forget to configure in .env file)
+-> npm i
+-> npm apply
+
+Required DB tables
 
 ```sql
   CREATE TABLE comics (
@@ -39,4 +41,26 @@ CREATE TABLE users (
   UNIQUE KEY email (email),
   UNIQUE KEY username (username)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+```
+
+## Documentation
+
+Available cli commands
+
+```bash
+db-up : A command I use in my dev environment to build the database container.
+
+apply : Compile a module because it's patched.
+
+start : start the server.
+
+watch : start the server with nodemon.
+
+installation-client : compile the front-end.
+
+client : start the front-end.
+
+build : build the front-end.
+
+patch : can patch a module, it needs the module to be already edited, don't forget to target the module after the "patch" word.    
 ```
