@@ -9,6 +9,7 @@ class User extends Model {
     public email!: string;
     public username!: string;
     public password!: string;
+    public token!: string;
 
     public comparePassword(password: string): boolean {
         return bcrypt.compareSync(password, this.password);
@@ -47,6 +48,10 @@ User.init(
             type: DataTypes.STRING,
             allowNull: false,
         },
+        token: {
+            type: DataTypes.STRING,
+            allowNull: false
+        }
     },
     {
         sequelize,

@@ -21,8 +21,22 @@ index c279ed0..2d6f654 100644
  var author_1 = require("./lib/author");
 -exports.Author = author_1.Author;
 +Object.defineProperty(exports, "Author", { enumerable: true, get: function () { return author_1.Author; } });
+diff --git a/node_modules/bedetheque-scraper/dist/lib/album.d.ts b/node_modules/bedetheque-scraper/dist/lib/album.d.ts
+index 594123a..101f986 100644
+--- a/node_modules/bedetheque-scraper/dist/lib/album.d.ts
++++ b/node_modules/bedetheque-scraper/dist/lib/album.d.ts
+@@ -29,6 +29,9 @@ export declare class Album {
+     };
+     voteAverage: number;
+     voteCount: number;
++    isbn: string;
++    content: string;
++    collection: string
+     constructor(page: Cheerio, $: CheerioStatic, serie: Serie);
+     private static findVoteAverage;
+     private findVoteCount;
 diff --git a/node_modules/bedetheque-scraper/dist/lib/album.js b/node_modules/bedetheque-scraper/dist/lib/album.js
-index 4079b7f..02e817b 100644
+index 4079b7f..8a02f54 100644
 --- a/node_modules/bedetheque-scraper/dist/lib/album.js
 +++ b/node_modules/bedetheque-scraper/dist/lib/album.js
 @@ -1,5 +1,6 @@
@@ -41,16 +55,29 @@ index 4079b7f..02e817b 100644
          var large = elem.attr('href');
          var small = elem.find('img').attr('src');
          return { small: small ? small : null, large: large ? large : null };
-@@ -84,6 +85,13 @@ var Album = /** @class */ (function () {
+@@ -52,9 +53,6 @@ var Album = /** @class */ (function () {
+         var value = pageInfo.text().split(':')[1]
+             ? pageInfo.text().split(':')[1].trim()
+             : null;
+-        if (!value) {
+-            return;
+-        }
+         switch (key) {
+             case 'scénario':
+                 this.scenario = value;
+@@ -84,6 +82,16 @@ var Album = /** @class */ (function () {
                      arr = value.match(/Moins de (\d+)/);
                      this.estimationEuros = arr ? [parseInt(arr[1])] : [];
                  }
 +                break;
 +            case 'isbn':
-+                this.ean = value;
++                this.isbn = value;
 +                break;
 +            case 'autres infos':
 +                this.content = value;
++                break;
++            case 'collection':
++                this.collection = value;
 +                break;
              default:
                  break;
@@ -252,28 +279,32 @@ index 3d2ee66..cd9c9e3 100644
  var cheerio = __importStar(require("cheerio"));
  var Utils = /** @class */ (function () {
 diff --git a/node_modules/bedetheque-scraper/lib/album.ts b/node_modules/bedetheque-scraper/lib/album.ts
-index 1387831..723fb4e 100644
+index 1387831..d0dd4c9 100644
 --- a/node_modules/bedetheque-scraper/lib/album.ts
 +++ b/node_modules/bedetheque-scraper/lib/album.ts
-@@ -22,6 +22,8 @@ export class Album {
+@@ -22,6 +22,9 @@ export class Album {
    public imageReverse: { small: string, large: string };
    public voteAverage: number; // voteAverage /100
    public voteCount: number;
-+  public ean: string;
++  public isbn: string;
 +  public content: string;
++  public collection: string;
  
    constructor(page: Cheerio, $: CheerioStatic, serie: Serie) {
      this.serieId = serie.serieId;
-@@ -111,6 +113,13 @@ export class Album {
+@@ -111,6 +114,16 @@ export class Album {
            arr = value.match(/Moins de (\d+)/)
            this.estimationEuros = arr ? [parseInt(arr[1])] : [];
          }
 +        break;
 +      case 'isbn':
-+        this.ean = value;
++        this.isbn = value;
 +        break;
 +      case 'autres infos':
 +        this.content = value;
++        break;
++      case 'collection':
++        this.collection = value;
 +        break;
        default:
          break;

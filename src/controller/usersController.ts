@@ -1,5 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
-import UserModel  from '../model/userModel'
+import UserModel  from '../model/userModel';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export const createUser = async (req: Request, res: Response) => {
     try {
@@ -57,4 +61,58 @@ export const deleteUser = async (req: Request, res: Response) => {
         console.error('Error when deleting user :', e);
         res.status(500).json({ message: 'An error has occurred when deleting account' });
     }
+}
+
+export const login = async (req: Request, res: Response) => {
+    try {
+        const { email, password } = req.body;
+
+        if (!email || !password) {
+            return res.status(400).json({ message: 'Wrong data' });
+        }
+
+        const user = await UserModel.findOne({ where: { email: email } });
+
+        if (user) {
+            if (!user.comparePassword(password)) {
+                return res.status(401).json({ message: 'Invalid data' });
+            }
+
+            const token = generateToken(user.email);
+
+            return res.status(200).json({ token: token });//verifier car dans l'exemple il retourne le user au login pas le token
+        }
+
+        return res.status(404).json({ message: 'Theres a problem fetching user' });
+    } catch (e) {
+        console.error('Connection error :', e);
+        res.status(500).json({ message: 'An error occurred' });
+    }
+};
+
+const generateToken = async function(this: any, userId: string) {
+    const token = jwt.sign(userId, process.env.SECRET!);
+    await this.updateUser()
+    // Stocker le jeton dans la base de données ou tout autre moyen de stockage sécurisé
+    // Par exemple, vous pouvez avoir une table "tokens" avec les colonnes : userId, token, createdAt, expiresAt
+
+    return token;
+};
+
+const setToken = async (email: string, token: string) => {
+        try {
+            const user = await UserModel.findOne({ where: { email: email } });
+
+            if (user) {
+                user.token = token;
+
+                await user.save();
+
+                return;
+            }
+
+            return new Error('user not found');
+        } catch (e) {
+            return e;
+        }
 }

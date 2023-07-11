@@ -13,22 +13,22 @@ It needs theses cmds and the database running (don't forget to configure in .env
 Required DB tables
 
 ```sql
-  CREATE TABLE comics (
-
-  author varchar(255) NOT NULL,
-  volume int(11) NOT NULL,
-  title varchar(255) NOT NULL,
-  series varchar(255) NOT NULL,
-  collection varchar(255) NOT NULL,
-  publisher varchar(255) NOT NULL,
-  release_date varchar(255) NOT NULL,
-  content text NOT NULL,
-  page_count int(11) NOT NULL,
-  isbn varchar(255) NOT NULL,
-  createdAt timestamp NOT NULL DEFAULT current_timestamp(),
-  updatedAt timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  PRIMARY KEY (isbn)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+CREATE TABLE `comics` (
+                          `author` varchar(255) DEFAULT NULL,
+                          `volume` varchar(255) DEFAULT NULL,
+                          `title` varchar(255) DEFAULT NULL,
+                          `series` varchar(255) DEFAULT NULL,
+                          `collection` varchar(255) DEFAULT NULL,
+                          `publisher` varchar(255) DEFAULT NULL,
+                          `release_date` varchar(255) DEFAULT NULL,
+                          `content` text DEFAULT NULL,
+                          `page_count` int(11) DEFAULT NULL,
+                          `cover` varchar(255) DEFAULT NULL,
+                          `isbn` varchar(255) NOT NULL,
+                          `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
+                          `updatedAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+                          PRIMARY KEY (`isbn`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci
 
 CREATE TABLE users (
   id bigint(20) unsigned NOT NULL AUTO_INCREMENT,

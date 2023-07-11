@@ -43,7 +43,7 @@ export const createComics = async (req: Request, res: Response) => {
 
 export const synchronizeComics = async (req: Request, res: Response) => {
     try {
-        // const albumsArray = [];
+        const albumsArray = [];
         const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0'.split('');
         let count = 0;//
         for (const letter of letters) {
@@ -51,35 +51,47 @@ export const synchronizeComics = async (req: Request, res: Response) => {
             if (seriesUrls) {
                 for (const seriesUrl of seriesUrls) {
                     const {serie, albums} = await Scraper.getSerie(seriesUrl);
-                    console.log(albums[0]);
+                    // console.log(albums[0]);
                     count++;
-                    if (count >= 1) {
-                        return;
+                    if (count >= 3) {
+                        break;
                     }//
 
-                    // for (const album of albums) {
-                    //     const mappedAlbum = {
-                    //         isbn: album.isbn,
-                    //         author: album.scenario,
-                    //         volume: album.volume,
-                    //         title: album.title,
-                    //         series: album.serieTitle,
-                    //         collection: album.collection,
-                    //         publisher: album.editor,
-                    //         release_date: new Date(album.date * 1000),
-                    //         content: album.content,
-                    //         page_count: album.nbrOfPages
-                    //     };
-                    //
-                    //     albumsArray.push(mappedAlbum);
-                    // }
+                    for (const album of albums) {
+                        const mappedAlbum = {
+                            author: album.scenario,
+                            volume: album.albumNum,
+                            title: album.albumTitle,
+                            series: album.serieTitle,
+                            collection: album.collection,
+                            publisher: album.scenario,
+                            release_date: new Date(album.date * 1000),
+                            content: album.content,
+                            page_count: album.nbrOfPages,
+                            isbn: album.isbn,
+                            cover: album.imageCover.large
+                        };
+
+                        albumsArray.push(mappedAlbum);
+                    }
                 }
             }
+            break;
         }
-
         // return res.send(await ComicModel.bulkCreate(albumsArray, {
         //     updateOnDuplicate: ['isbn'],
         // }));
+        return ComicModel.bulkCreate(albumsArray, {
+            updateOnDuplicate: ['isbn'],
+        })
+            .then(() => {
+                res.send("Well inserted");
+            })
+            .catch((error) => {
+                // Gestion des erreurs
+                console.error("Erreur lors de l'insertion : ", error);
+                res.status(500).send("Error while inserting");
+            });
     } catch (e) {
         console.error(e);
         res.status(500).send('Error while creating comics');
