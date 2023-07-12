@@ -1,7 +1,3 @@
-# Répertoire node_modules
 node_modules/
-
-# Fichiers de sauvegarde de l'IDE
 .idea/
-
 ./.env
