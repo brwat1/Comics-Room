@@ -21,6 +21,22 @@ export const createUser = async (req: Request, res: Response) => {
     }
 }
 
+export const getUser = async (req: Request, res: Response) => {
+    try {
+        const { email } = req.body;
+
+        if (!email ) {
+            return res.status(400).json({ message: 'Missing required fields' });
+        }
+
+        const user = await UserModel.findOne({ where: { email: email } });
+        res.status(201).json(user);
+    } catch (e) {
+        console.error('Error when fetching user :', e);
+        res.status(500).json({ message: 'An error has occurred when fetching account' });
+    }
+}
+
 export const updateUser = async (req: Request, res: Response) => {
     try {
         const { email, username, oldPassword, newPassword } = req.body;
@@ -78,9 +94,9 @@ export const login = async (req: Request, res: Response) => {
                 return res.status(401).json({ message: 'Invalid data' });
             }
 
-            const token = generateToken(user.email);
+            const token = await generateToken(user.email);
 
-            return res.status(200).json({ token: token });//verifier car dans l'exemple il retourne le user au login pas le token
+            return res.status(200).json({ token: token });
         }
 
         return res.status(404).json({ message: 'Theres a problem fetching user' });
@@ -91,28 +107,5 @@ export const login = async (req: Request, res: Response) => {
 };
 
 const generateToken = async function(this: any, userId: string) {
-    const token = jwt.sign(userId, process.env.SECRET!);
-    await this.updateUser()
-    // Stocker le jeton dans la base de données ou tout autre moyen de stockage sécurisé
-    // Par exemple, vous pouvez avoir une table "tokens" avec les colonnes : userId, token, createdAt, expiresAt
-
-    return token;
+    return jwt.sign(userId, process.env.SECRET!);
 };
-
-const setToken = async (email: string, token: string) => {
-        try {
-            const user = await UserModel.findOne({ where: { email: email } });
-
-            if (user) {
-                user.token = token;
-
-                await user.save();
-
-                return;
-            }
-
-            return new Error('user not found');
-        } catch (e) {
-            return e;
-        }
-}
