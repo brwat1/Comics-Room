@@ -17,8 +17,8 @@ export const getComicbook = async (req: Request, res: Response) => {
         }
 
         res.send(comic);
-    } catch (error) {
-        console.error(error);
+    } catch (e) {
+        console.error(e);
         res.status(500).send('Error during search request');
     }
 }
@@ -78,9 +78,7 @@ export const synchronizeComics = async (req: Request, res: Response) => {
             }
             break;
         }
-        // return res.send(await ComicModel.bulkCreate(albumsArray, {
-        //     updateOnDuplicate: ['isbn'],
-        // }));
+
         return ComicModel.bulkCreate(albumsArray, {
             updateOnDuplicate: ['isbn'],
         })
@@ -88,8 +86,6 @@ export const synchronizeComics = async (req: Request, res: Response) => {
                 res.send("Well inserted");
             })
             .catch((error) => {
-                // Gestion des erreurs
-                console.error("Erreur lors de l'insertion : ", error);
                 res.status(500).send("Error while inserting");
             });
     } catch (e) {

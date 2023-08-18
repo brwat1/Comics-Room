@@ -1,6 +1,5 @@
 import express, {Request, Response} from 'express';
 import { catchErrors } from '../helper/errorsHandler';
-// import passport from 'passport';
 import {
     getComics,
     getComicbook,
