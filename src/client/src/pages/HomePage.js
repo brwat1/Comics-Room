@@ -1,7 +1,13 @@
 import React from 'react'
+import TitleBlock from '../components/titleBlock.js'
+import '../style/components/homepage.css'
 
-const HomePage = () => {
-  return <h1>Home</h1>
+function HomePage() {
+        return (
+            <div className={'homepage-container'}>
+                <TitleBlock/>
+            </div>
+        )
 }
 
-export default HomePage
+export default HomePage;

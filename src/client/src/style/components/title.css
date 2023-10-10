@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
+.title-container {
+	min-height: 100%;
+	width: 100%;
+	align-content: center;
+	align-items: center;
+	background-color: #023e8a;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	gap: 0px;
+	height: min-content;
+	justify-content: flex-start;
+	overflow: hidden;
+	padding: 0;
+	position: relative;
+}
+
+.title-block {
+	align-content: center;
+	align-items: center;
+	background-color: #023e8a;
+	display: flex;
+	flex: none;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	gap: 10px;
+	height: 800px;
+	justify-content: center;
+	overflow: hidden;
+	padding: 100px 50px;
+	position: relative;
+	width: 100%;
+}
+
+.title-icon {
+	height: auto;
+	width: 100%;
+	/*flex: none;*/
+	/*position: relative;*/
+	z-index: 4;
+	opacity: 0;
+	animation: fadeIn 1s ease-in-out forwards;
+}
+
+.title-icon > img {
+	pointer-events: none;
+}
+
+.title-label {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	height: min-content;
+	position: relative;
+	width: min-content;
+	flex: none;
+}
+
+.title-up {
+	outline: none;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	flex-shrink: 0;
+	transform: none;
+	flex: none;
+	flex-shrink: 0;
+	height: auto;
+	position: relative;
+	white-space: pre;
+	width: auto;
+	z-index: 1;
+	opacity: 0;
+	animation: fadeIn 2s ease-in-out forwards;
+}
+
+.title-up-text {
+	font-family: "Staatliches", sans-serif;
+	font-size: 64px;
+	line-height: 1.1em;
+	text-align: center;
+	color: rgb(255, 158, 0);
+	font-style: normal;
+	font-weight: 400;
+	letter-spacing: 0;
+	text-transform: none;
+	text-decoration: none;
+	margin: 0;
+	padding: 0;
+	white-space: pre;
+}
+
+.title-down {
+	background-color: #ff9e00;
+	border-radius: 20px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: 0px;
+	height: min-content;
+	padding: 10px 20px;
+	position: relative;
+	width: min-content;
+	overflow: hidden;
+	transform: none;
+	will-change: transform;
+	opacity: 0;
+	animation: fadeIn 3.5s ease-in-out forwards;
+}
+
+.title-down-label {
+	outline: none;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	flex-shrink: 0;
+	transform: none;
+	flex: none;
+	flex-shrink: 0;
+	height: auto;
+	position: relative;
+	white-space: pre;
+	width: auto;
+	z-index: 1;
+}
+
+.title-down-label-text {
+	font-family: "Staatliches", sans-serif;
+	font-size: 64px;
+	line-height: 1.1em;
+	text-align: center;
+	color: rgb(2, 62, 138);
+	font-style: normal;
+	font-weight: 400;
+	letter-spacing: 0;
+	text-transform: none;
+	text-decoration: none;
+	margin: 0;
+	padding: 0;
+	white-space: pre;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}

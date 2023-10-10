@@ -1,7 +1,6 @@
 import db from './db';
 import { DataTypes, Model } from 'sequelize';
 import bcrypt from 'bcrypt';
-import jwt from "jsonwebtoken";
 
 const sequelize = db.init();
 
@@ -10,7 +9,6 @@ class User extends Model {
     public email!: string;
     public username!: string;
     public password!: string;
-    public token!: string;
 
     public comparePassword(password: string): boolean {
         return bcrypt.compareSync(password, this.password);
@@ -48,10 +46,6 @@ User.init(
         password: {
             type: DataTypes.STRING,
             allowNull: false,
-        },
-        token: {
-            type: DataTypes.STRING,
-            allowNull: true
         }
     },
     {
@@ -62,7 +56,6 @@ User.init(
                 user.email = user.email.trim().toLowerCase();
                 user.username = user.username.trim().toLowerCase();
                 user.password = user.encryptPassword(user.password);
-                user.token = jwt.sign(user.email, process.env.SECRET!);
             },
         },
     }
