@@ -23,7 +23,7 @@ export const createUser = async (req: Request, res: Response) => {
 
 export const getUser = async (req: Request, res: Response) => {
     try {
-        const { email } = req.body;
+        const { email } = req.query;
 
         if (!email ) {
             return res.status(400).json({ message: 'Missing required fields' });
@@ -107,5 +107,5 @@ export const login = async (req: Request, res: Response) => {
 };
 
 const generateToken = async function(this: any, userId: string) {
-    return jwt.sign(userId, process.env.SECRET!);
+    return jwt.sign({ userId: userId }, process.env.SECRET!);
 };
