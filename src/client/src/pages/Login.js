@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
-
+import CurrentReadings from '../components/CurrentReadings.js'
+import Wishlist from '../components/Wishlist.js'
+import RecentBoughts from '../components/RecentBoughts.js'
+import '../style/components/login.css'
 function Login() {
     const [user, setUser] = useState(null);
     const [loginData, setLoginData] = useState({ email: '', password: '' });
+    const navigate = useNavigate();
     const secretKey = 'test';
 
     useEffect(() => {
@@ -18,8 +23,6 @@ function Login() {
                 },
                 params: { email },
             });
-            console.log(1)
-            console.log(res)
 
             if (res.status === 201) {
                 setUser({
@@ -65,16 +68,31 @@ function Login() {
         }
     };
 
+    const handleLogout = () => {
+        localStorage.removeItem('jwtToken');
+        setUser(null);
+        handleRedirect('/')
+    };
+
+    const handleRedirect = (path) => {
+        navigate(path);
+    }
+
     return (
-        <div className="App">
+        <div className="login-container">
             {user ? (
                 <div>
                     <h1>Bienvenue, {user.username}!</h1>
+                    <button onClick={handleLogout}>Se déconnecter</button>
+                    <CurrentReadings/>
+                    <Wishlist/>
+                    <RecentBoughts/>
+                    <button onClick={() => handleRedirect('/comics')}>Ma collection</button>
                 </div>
             ) : (
                 <div>
                     <p>Connectez-vous pour accéder à votre compte.</p>
-                    <form onSubmit={handleLoginSubmit}>
+                    <form onSubmit={handleLoginSubmit} className={'login-form'}>
                         <label>
                             Email :
                             <input

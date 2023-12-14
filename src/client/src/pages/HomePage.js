@@ -1,5 +1,5 @@
 import React from 'react'
-import TitleBlock from '../components/titleBlock.js'
+import TitleBlock from '../components/TitleBlock.js'
 import '../style/components/homepage.css'
 
 function HomePage() {
