@@ -1,0 +1,18 @@
+:root {
+	--main-font: 'Preahvihear', sans-serif;
+	--light-blue-rgba: 1, 119, 180;
+	--dark-blue-rgba: 1, 119, 180;
+	--orange: #ff9e00;
+	--orange-rgba: 255, 158, 0;
+	--white: #E5E7EB;
+	--staatliches: "Staatliches", sans-serif;
+	--atkinson: 'Atkinson Hyperlegible', sans-serif;
+}
+
+#searchInputs {
+
+}
+
+#searchResults {
+	border: 1px solid
+}

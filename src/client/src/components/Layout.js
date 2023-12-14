@@ -12,12 +12,12 @@ const contentStyle = {
 
 const HCLayout = ({ children }) => {
     const { pathname } = useLocation();
-    const [selectedKey, setSelectedKey] = useState('1'); // Valeur par défaut
+    const [selectedKey, setSelectedKey] = useState('1');
 
     useEffect(() => {
         const routeKeyMapping = {
             '/': '1',
-            '/login': '2',
+            '/account': '2',
             '/comics': '3',
         };
         setSelectedKey(routeKeyMapping[pathname] || '1');
@@ -31,7 +31,7 @@ const HCLayout = ({ children }) => {
               <Link to='/'><img src={'home2.png'} alt={'home icon'}></img></Link>
           </Menu.Item>
           <Menu.Item key='2'>
-              <Link to='/login'><img src={'user2.png'} alt={'user icon'} style={{ maxHeight: '75%' }}></img></Link>
+              <Link to='/account'><img src={'user2.png'} alt={'user icon'} style={{ maxHeight: '75%' }}></img></Link>
           </Menu.Item>
           <Menu.Item key='3'>
               <Link to='/comics'><img src={'book2.png'} alt={'book icon'} style={{ maxHeight: '70%' }}></img></Link>

@@ -5,7 +5,6 @@ import { Routes, Route } from 'react-router-dom'
 import HomePage from './pages/HomePage'
 import ComicsPage from './pages/ComicsPage'
 import Register from './pages/Register'
-import Login from './pages/Login'
 import Account from './pages/Account'
 
 const App = () => {
@@ -15,7 +14,6 @@ const App = () => {
         <Route path='/' element={<HomePage />} />
         <Route path='comics' element={<ComicsPage />} />
         <Route path='register' element={<Register />} />
-        <Route path='login' element={<Login />} />
         <Route path='account' element={<Account />} />
         <Route path='about' element={<h1>A propos</h1>} />
         <Route path='contact' element={<h1>Contact</h1>} />
