@@ -12,7 +12,7 @@ It only needs a npm install and the database running (don't forget to configure 
 
 ```sql
   CREATE TABLE comics (
-
+  id int(30) NOT NULL,
   author varchar(255) NOT NULL,
   volume int(11) NOT NULL,
   title varchar(255) NOT NULL,
@@ -25,7 +25,7 @@ It only needs a npm install and the database running (don't forget to configure 
   isbn varchar(255) NOT NULL,
   createdAt timestamp NOT NULL DEFAULT current_timestamp(),
   updatedAt timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  PRIMARY KEY (isbn)
+  PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 CREATE TABLE users (
