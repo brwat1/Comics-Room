@@ -57,6 +57,9 @@ function Account() {
                         userId: decoded.userId,
                         username: ''
                     });
+
+                    navigate('/comics');
+                    navigate('/account');
                 } catch (error) {
                     console.error('Erreur lors du décodage du token :', error);
                 }
@@ -80,7 +83,7 @@ function Account() {
 
     return (
         <div className="account-container">
-            {user ? (
+            {user && user.username ? (
                 <div>
                     <h1>Bienvenue, {user.username}!</h1>
                     <button onClick={handleLogout}>Se déconnecter</button>

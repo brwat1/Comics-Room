@@ -1,62 +1,78 @@
-import React, { useEffect, useState } from 'react'
-import { Routes, Route, useNavigate } from 'react-router-dom'
-import jwt_decode from "jwt-decode";
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import ComicCard from '../components/ComicCard';
 import '../style/components/comicsPage.css';
 
 const ComicsPage = () => {
-    const [user, setUser] = useState(null);
-    const [loginData, setLoginData] = useState({ email: '', password: '' });
+    const [searchInput, setSearchInput] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
     const navigate = useNavigate();
-    const secretKey = 'test';
 
     useEffect(() => {
-        const token = localStorage.getItem('jwtToken');
-
-        if (!token) {
+        const fetchData = async () => {
             try {
-                navigate('/account');
+                const res = await axios.get(`http://localhost:3001/api/comic/title/${encodeURIComponent(searchInput)}`);
+                setSearchResults(res.data);
             } catch (error) {
-                console.error('Erreur lors du décodage du token :', error);
-            }
-        }
-
-        const getUserData = async () => {
-            const decoded = jwt_decode(token, secretKey);
-            const email = decoded.userId;
-            const res = await axios.get('http://localhost:3001/api/user', {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-                params: { email },
-            });
-
-            if (res.status === 201) {
-                setUser({
-                    userId: email,
-                    username: res.data.username
-                });
+                console.error('Erreur lors de la recherche :', error);
             }
         };
 
-        getUserData();
-    }, []);
+        const handleSearch = () => {
+            fetchData();
+        };
+
+        const handleKeyDown = (event) => {
+            if (event.key === 'Enter') {
+                handleSearch();
+            }
+        };
+        const searchInputElement = document.getElementById('searchInput');
+
+        if (searchInputElement) {
+            searchInputElement.addEventListener('keydown', handleKeyDown);
+
+            return () => {
+                searchInputElement.removeEventListener('keydown', handleKeyDown);
+            };
+        }
+    }, [searchInput, searchResults]);
 
     return (
         <div className={'comics-container'}>
-            <input type="text" id="searchInput" placeholder="Rechercher..." />
-            <div id="searchResults"></div>
-
-            {/*TODO : aller chercher les données en base de tous les comics dispo, faire p-e une pagination, barre de recherche en haut, voir comment opti la recherche, p-e indexer*/}
+            <div className="textbox">
+                <div className="textbox-box">
+                    <div className="textbox-face textbox-side"></div>
+                    <div className="textbox-face textbox-bottom"></div>
+                    <div className="textbox-face textbox-top"></div>
+                    <div className="textbox-field">
+                        <div className="textbox-label">Comics</div>
+                        <input className="textbox-text"
+                               type="text"
+                               id="searchInput"
+                               placeholder="Rechercher..."
+                               value={searchInput}
+                               onChange={(e) => setSearchInput(e.target.value)}/>
+                    </div>
+                    <div className="textbox-action">
+                        <div className="textbox-face textbox-side"></div>
+                        <div className="textbox-face textbox-top"></div>
+                        <div className="textbox-face textbox-bottom"></div>
+                        <svg viewBox="0 0 24 24">
+                            <path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div id="searchResults">
+                {() => { console.log(searchResults);}}
+                {searchResults.map((result) => (
+                    <ComicCard comic={result}></ComicCard>
+                ))}
+            </div>
         </div>
-    )
+    );
+};
 
-    // return (
-    //     <Routes>
-    //       <Route path='/' element={<div />} />
-    //       <Route path=':id' element={<div />} />
-    //     </Routes>
-    // )
-}
-
-export default ComicsPage
+export default ComicsPage;

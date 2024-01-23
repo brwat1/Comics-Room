@@ -4,6 +4,7 @@ import {
     getComics,
     getComicbook,
     createComics,
+    getComicbookByTitle,
     synchronizeComics
 } from '../controller/comicsController';
 
@@ -21,7 +22,8 @@ const router = express.Router();
 
 //get APIs
 router.get('/api/comics', catchErrors(getComics));
-router.get('/api/comic/:id', catchErrors(getComicbook));
+router.get('/api/comic/isbn/:id', catchErrors(getComicbook));
+router.get('/api/comic/title/:id', catchErrors(getComicbookByTitle));
 router.get('/test', catchErrors(synchronizeComics));//rename
 router.get('/api/user', auth, catchErrors(getUser));
 
