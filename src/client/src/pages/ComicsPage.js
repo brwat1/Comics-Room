@@ -1,13 +1,41 @@
 import React, { useEffect, useState } from 'react';
+import Slider from 'react-slick';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import ComicCard from '../components/ComicCard';
 import '../style/components/comicsPage.css';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 const ComicsPage = () => {
     const [searchInput, setSearchInput] = useState('');
     const [searchResults, setSearchResults] = useState([]);
-    const navigate = useNavigate();
+    const navigate = useNavigate(); //@TODO: rajouter un orderby dans l'API sur l'id quand je query
+    const slickSettings = {
+        centerMode: true,
+        centerPadding: '260px',
+        slidesToShow: 3,
+        responsive: [
+            {
+                breakpoint: 768,
+                settings: {
+                    arrows: false,
+                    centerMode: true,
+                    centerPadding: '40px',
+                    slidesToShow: 3
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    arrows: false,
+                    centerMode: true,
+                    centerPadding: '40px',
+                    slidesToShow: 1
+                }
+            }
+        ]
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -66,10 +94,11 @@ const ComicsPage = () => {
                 </div>
             </div>
             <div id="searchResults">
-                {() => { console.log(searchResults);}}
-                {searchResults.map((result) => (
-                    <ComicCard comic={result}></ComicCard>
-                ))}
+                <Slider {...slickSettings}>
+                    {searchResults.map((result) => (
+                        <ComicCard comic={result}></ComicCard>
+                    ))}
+                </Slider>
             </div>
         </div>
     );

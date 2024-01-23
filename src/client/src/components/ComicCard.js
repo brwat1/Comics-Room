@@ -4,7 +4,7 @@ const { Meta } = Card
 
 const ComicCard = ({ comic }) => {
   return (
-    <div style={{ width: '35vh', margin: '1rem' }}>
+    <div style={{ width: '34vh', margin: '1rem' }}>
         <Card
           cover={
             <img
@@ -20,7 +20,7 @@ const ComicCard = ({ comic }) => {
         >
           <Meta
             title={comic.title}
-            description={'Written by ' + comic.author + ', ' + comic.page_count + ' pages.'}
+            description={(comic.author !== '' ? 'Written by ' + comic.author : '') + (comic.page_count !== 0 ? ', ' + comic.page_count + ' pages.' : '')}
           />
         </Card>
     </div>
