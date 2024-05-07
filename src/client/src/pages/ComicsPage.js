@@ -47,13 +47,9 @@ const ComicsPage = () => {
             }
         };
 
-        const handleSearch = () => {
-            fetchData();
-        };
-
         const handleKeyDown = (event) => {
             if (event.key === 'Enter') {
-                handleSearch();
+                fetchData();
             }
         };
         const searchInputElement = document.getElementById('searchInput');

@@ -1,16 +1,26 @@
 :root {
 	--main-font: 'Preahvihear', sans-serif;
-	--light-blue-rgba: 1, 119, 180;
+	--dark-blue: #0177b4d9;
 	--dark-blue-rgba: 1, 119, 180;
 	--orange: #ff9e00;
 	--orange-rgba: 255, 158, 0;
 	--white: #E5E7EB;
 	--staatliches: "Staatliches", sans-serif;
 	--atkinson: 'Atkinson Hyperlegible', sans-serif;
+	--header: #001529;
+	--background-color: #023e8a;
 }
 
 .comics-container {
 	width: 100%;
+}
+
+.ant-card-body {
+	min-height: 12vh;
+}
+
+.ant-card-cover {
+	min-height: 52vh;
 }
 
 .textbox {
@@ -64,6 +74,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	border: 2px solid var(--dark-blue);
 	border-radius: 100px;
 	transform-style: preserve-3d;
 	animation: hover 2s -0.4s alternate infinite;

@@ -6,11 +6,36 @@ import CurrentReadings from '../components/CurrentReadings.js'
 import Wishlist from '../components/Wishlist.js'
 import RecentBoughts from '../components/RecentBoughts.js'
 import '../style/components/account.css'
+import RegisterPopin from "../components/popins/registerPopin";
 function Account() {
     const [user, setUser] = useState(null);
     const [loginData, setLoginData] = useState({ email: '', password: '' });
+    const [showPopin, setShowPopin] = useState(false);
     const navigate = useNavigate();
     const secretKey = 'test';
+
+    useEffect(() => {
+        const handleRegister = () => {
+            setShowPopin(true);
+        };
+
+        const registerButton = document.getElementById('register-button');
+
+        if (registerButton) {
+            registerButton.addEventListener('click', handleRegister);
+
+            return () => {
+                registerButton.removeEventListener('click', handleRegister);
+            };
+        }
+
+        // Ajoutez cette partie pour la vérification
+        return () => {
+            if (registerButton) {
+                registerButton.removeEventListener('click', handleRegister);
+            }
+        };
+    }, []);
 
     useEffect(() => {
         const token = localStorage.getItem('jwtToken');
@@ -81,6 +106,10 @@ function Account() {
         navigate(path);
     }
 
+    const handleRegister = () => {
+        setShowPopin(true);
+    }
+
     return (
         <div className="account-container">
             {user && user.username ? (
@@ -94,7 +123,7 @@ function Account() {
                 </div>
             ) : (
                 <div>
-                    <p>Connectez-vous pour accéder à votre compte.</p>
+                    <p>Connectez-vous pour accéder à votre compte</p>
                     <form onSubmit={handleLoginSubmit} className={'login-form'}>
                         <label>
                             Email :
@@ -118,6 +147,12 @@ function Account() {
                         <br />
                         <button type="submit">Se connecter</button>
                     </form>
+                    <div id={'register-container'}>
+                        Pas encore inscrit ? Créez un compte <a id={'register-button'}>ici</a>
+                    </div>
+                    { showPopin && (
+                        <RegisterPopin/>
+                    )}
                 </div>
             )}
         </div>

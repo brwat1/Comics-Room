@@ -125,3 +125,13 @@
 	box-shadow: rgba(var(--dark-blue-rgba), 0.6) 0 1px 30px;
 	transition-duration: .1s;
 }
+
+#register-container {
+	font-size: 10pt;
+	text-align: center;
+	margin-top: 5%;
+}
+
+#register-button {
+
+}
